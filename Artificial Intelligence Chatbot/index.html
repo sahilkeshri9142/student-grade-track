@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroBuddy AI – Smart Conversational Assistant</title>
+    <meta name="description" content="NeuroBuddy AI is an intelligent, offline-capable conversational study assistant for Computer Science students, covering Java, Python, DBMS, DSA, Operating Systems, and Computer Networks.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="brand">
+                    <div class="brand-icon">🧠</div>
+                    <div class="brand-text">
+                        <h2>NeuroBuddy AI</h2>
+                        <span class="brand-tagline">Smart Conversational Assistant</span>
+                    </div>
+                </div>
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span class="status-label">Online • Local NLP Engine</span>
+                </div>
+            </div>
+
+            <!-- User Profile Card -->
+            <div class="user-card" id="userCard">
+                <div class="user-avatar">👤</div>
+                <div class="user-details">
+                    <div class="user-name-row">
+                        <span class="user-nickname" id="displayNickname">Scholar</span>
+                        <button class="edit-name-btn" id="editNameBtn" title="Change Nickname">✏️ Edit</button>
+                    </div>
+                    <span class="user-role">Active Learner</span>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="sidebar-section">
+                <span class="section-title">QUICK ACTIONS</span>
+                <nav class="quick-nav">
+                    <button class="nav-btn" data-query="Show me the study topics I can learn">
+                        <span class="nav-icon">📚</span>
+                        <span>Study Help</span>
+                    </button>
+                    <button class="nav-btn" data-query="I feel demotivated">
+                        <span class="nav-icon">💡</span>
+                        <span>Study Motivation</span>
+                    </button>
+                    <button class="nav-btn" data-query="Tell me a joke">
+                        <span class="nav-icon">😄</span>
+                        <span>Tell a Joke</span>
+                    </button>
+                    <button class="nav-btn" data-query="What can you do?">
+                        <span class="nav-icon">❓</span>
+                        <span>General Questions</span>
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Chat Session Controls -->
+            <div class="sidebar-section">
+                <span class="section-title">CHAT MANAGEMENT</span>
+                <div class="action-buttons-group">
+                    <button class="mgmt-btn export-btn" id="exportChatBtn">
+                        <span class="btn-icon">📥</span>
+                        <span>Export Chat History</span>
+                    </button>
+                    <button class="mgmt-btn clear-btn" id="clearChatBtn">
+                        <span class="btn-icon">🗑️</span>
+                        <span>Clear Chat</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sidebar Footer Stats -->
+            <div class="sidebar-footer">
+                <div class="stats-counter" id="statsCounter">
+                    <span>Messages: <strong id="statMsgCount">0</strong></span>
+                    <span class="stat-divider">•</span>
+                    <span>Topics: <strong id="statTopicCount">0</strong></span>
+                </div>
+                <div class="app-version">NeuroBuddy AI • College Portfolio Edition</div>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-container">
+            <!-- Mobile Navigation Bar -->
+            <header class="mobile-header">
+                <button class="mobile-toggle-btn" id="mobileToggleBtn" aria-label="Toggle Sidebar">☰</button>
+                <div class="mobile-brand">🧠 NeuroBuddy AI</div>
+                <div class="mobile-status-dot" title="Online"></div>
+            </header>
+
+            <!-- Dynamic Suggestion Bar -->
+            <div class="suggestion-bar-container">
+                <div class="suggestion-label">💡 Suggested:</div>
+                <div class="suggestion-chips" id="suggestionChips">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+
+            <!-- Scrollable Message Feed -->
+            <div class="chat-messages" id="chatMessages">
+                <!-- Messages appended dynamically -->
+            </div>
+
+            <!-- Typing Indicator (Simulated Bot Thinking) -->
+            <div class="typing-indicator-container" id="typingIndicator">
+                <div class="typing-bubble">
+                    <span class="typing-bot-avatar">🤖</span>
+                    <div class="typing-dots">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <span class="typing-text">NeuroBuddy is thinking...</span>
+                </div>
+            </div>
+
+            <!-- Bottom Message Input Bar -->
+            <footer class="chat-input-bar">
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        id="chatInput" 
+                        placeholder="Ask anything about Java, Python, DBMS, DSA, OS, Networks, or jokes..." 
+                        autocomplete="off" 
+                        aria-label="Chat input message"
+                    >
+                    <button class="send-btn" id="sendBtn" title="Send Message" aria-label="Send Message">
+                        <span>Send</span>
+                        <svg class="send-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+                <div class="input-hint">Press <strong>Enter ↵</strong> to send • 100% Offline Rule-Based NLP Assistant</div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Edit Nickname Modal Dialog -->
+    <div class="modal-overlay" id="nicknameModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Set Your Nickname</h3>
+                <button class="modal-close" id="modalCloseBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>What would you like NeuroBuddy AI to call you during your study session?</p>
+                <input type="text" id="nicknameInput" placeholder="Enter your name or handle..." maxlength="25">
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="modalCancelBtn">Cancel</button>
+                <button class="btn-primary" id="modalSaveBtn">Save Nickname</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Application JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
